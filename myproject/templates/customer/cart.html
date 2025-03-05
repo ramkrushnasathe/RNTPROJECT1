@@ -1,0 +1,58 @@
+{% extends 'master.html'%}
+
+
+{% block title %}
+    cart
+{% endblock title%}
+
+{% block body %}
+<html>
+<head>
+    <title>Cart</title>
+</head>
+<body >
+    <center><h2 style="color:red;font-size:25px; font-weight: bold; margin-top: 10px;">CART DATA</h2></center>
+        <center><h6 style="color: white; background-color: black; width:35%;">{% include 'messages.html'%}</h6></center>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>productinfo</th>
+                    <th>produtimage</th>
+                    <th>productprice</th>
+                    <th>productquantity</th>
+                    <th>delete</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cartdata %}
+                
+                <form action="{% url 'cartupdate' id=item.id%}" method="post">
+                    {%csrf_token%}
+                <tr>
+                    <td><input type="text" name="cartinfo" id="cartinfo" required value="{{item.cartinfo}}" style="display: none;">{{item.cartinfo}}</td>
+                    <td><input type="text" name="cartimage" id="cartimage" required value="{{item.cartimage}}" style="display: none;"><img src="{{item.cartimage}}" alt="loading" style="height:50%; width:50%;"></td>
+                    <td><input type="number" name="cartprice" id="cartprice" required value="{{item.cartprice}}" style="display: none;" >{{item.total_price}}</td>
+                    <td><input type="number" name="quantity" id="quantity" required value="{{item.quantity}}" onchange="this.form.submit()" ></td>
+                    <td><button><a href="{% url 'delete' id=item.id%}">delete</a></button></td>
+                </tr>
+            </form>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+        
+        
+
+    
+    <center><button type="button" class="btn btn-success" style="border-radius:20px; border:1px solid black; "><a href="{% url 'chekout' %}" style="text-decoration: none; color: white; font-size:20px;">Proceed to Checkout</a></button></center>
+</main>
+</body>
+</html>
+
+
+{% endblock body %}
